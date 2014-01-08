@@ -20,7 +20,7 @@ public class CalMemForMap {
     private final Random r = new Random();
 
     private void test(){
-        ConcurrentMap<Object, CacheObject> smallCaches = new ConcurrentHashMap<Object, CacheObject>();
+        ConcurrentHashMap<Object, CacheObject> smallCaches = new ConcurrentHashMap<Object, CacheObject>();
 //        ConcurrentMap<Object, CacheObject> bigCaches = new ConcurrentHashMap<Object, CacheObject>();
         System.out.println("start===============65");
         showMem();
@@ -36,7 +36,7 @@ public class CalMemForMap {
                     showMem();
                     ConcurrentMap<Object, CacheObject> temp = new ConcurrentHashMap<Object, CacheObject>();
                     System.out.println(smallCaches.hashCode());
-                    smallCaches = temp;
+//                    smallCaches = temp;
                     smallCaches.put(co.key, co);
                     System.out.println(smallCaches.hashCode() + " " + temp.hashCode());
 //                    System.out.println("2===============");
