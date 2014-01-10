@@ -14,7 +14,7 @@ public class CalMemForMap {
 
     }
     private final int SMALL = 10;
-    private final int BIG = 2000;
+    private final int BIG = 102000;
     private final int COUNT = 5;
 
     private final Random r = new Random();
