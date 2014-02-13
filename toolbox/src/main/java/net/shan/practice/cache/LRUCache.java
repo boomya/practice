@@ -4,13 +4,10 @@ import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-/**
- * @author bob.panl 一个简单的实现了LRU的Cache
- * 实现原理如下
- */
 public class LRUCache implements Serializable {
     private static final long serialVersionUID = 1992285270564898499L;
 
@@ -31,14 +28,22 @@ public class LRUCache implements Serializable {
     // 当前cache允许的容量
     private int                       oldCapacity   = 2000;
 
+//    //写的次数
+//    private int                       writeCount    = 0;
+//
+//    // cache命中的次数
+//    private int                       readHitCount  = 0;
+//
+//    //cache miss 的次数
+//    private int                       readMissCount = 0;
     //写的次数
-    private int                       writeCount    = 0;
+    private AtomicInteger writeCount = new AtomicInteger(0);
 
     // cache命中的次数
-    private int                       readHitCount  = 0;
+    private AtomicInteger readHitCount = new AtomicInteger(0);
 
     //cache miss 的次数
-    private int                       readMissCount = 0;
+    private AtomicInteger readMissCount = new AtomicInteger(0);
 
     //初始化时间
     private long                      initTime = -1;
@@ -79,14 +84,15 @@ public class LRUCache implements Serializable {
      * @return
      */
     public Object put(Object key, Object value) {
-        writeCount++;
+        writeCount.incrementAndGet();
 
         // 新的一定是需要放的
         CachedObject co = new CachedObject(value, newMap);
         newMap.put(key, co);
 
         // 如果到达容量限制
-        if (newMap.size() < newCapacity && oldMap.size() < oldCapacity) {
+//        if (newMap.size() < newCapacity && oldMap.size() < oldCapacity) {
+        if (newMap.size() < newCapacity) {
             oldMap.put(key, co);
         } else {
             Map<Object, CachedObject> temp = new ConcurrentHashMap<Object, CachedObject>();
@@ -131,7 +137,7 @@ public class LRUCache implements Serializable {
                     newMap.remove(key);
                 }
 
-                readMissCount ++;
+                readMissCount.incrementAndGet();
 
                 return null;
             }
@@ -141,11 +147,11 @@ public class LRUCache implements Serializable {
                 newMap.put(key, co.setParent(newMap));
             }
 
-            readHitCount ++;
+            readHitCount.incrementAndGet();
 
             return co.getObject();
         } else {
-            readMissCount ++;
+            readMissCount.incrementAndGet();
 
             return null;
         }
@@ -178,15 +184,15 @@ public class LRUCache implements Serializable {
     }
 
     public int getWriteCount() {
-        return writeCount;
+        return writeCount.intValue();
     }
 
     public int getReadHitCount() {
-        return readHitCount;
+        return readHitCount.intValue();
     }
 
     public int getReadMissCount() {
-        return readMissCount;
+        return readMissCount.intValue();
     }
 
     /**

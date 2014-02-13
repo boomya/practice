@@ -8,11 +8,11 @@
       <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>net.shan.practice</groupId>
-  <artifactId>cache</artifactId>
+  <artifactId>toolbox</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>cache</name>
+  <name>toolbox</name>
   <url>http://maven.apache.org</url>
 
   <properties>
