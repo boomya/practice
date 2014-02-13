@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-      <groupId>net.shan.practice</groupId>
-      <artifactId>pratice</artifactId>
+      <groupId>net.shan</groupId>
+      <artifactId>practice</artifactId>
       <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>net.shan.practice</groupId>
