@@ -1,5 +1,8 @@
 package net.shan.practice.random;
 
+import net.shan.practice.json.Game;
+import net.shan.practice.json.GameRuleDO;
+
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
