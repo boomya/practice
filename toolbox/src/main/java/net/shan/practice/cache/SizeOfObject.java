@@ -12,6 +12,7 @@ public class SizeOfObject extends SizeOf {
 
     public static void main(String[] args) throws Exception {
         SizeOf sizeOf = new SizeOfObject();
-        System.out.println("所占内存：" + sizeOf.size() + "字节");
+//        System.out.println("所占内存：" + sizeOf.size() + "字节");
+        System.out.println("所占内存：" + sizeOf.chessSize() + "字节");
     }
 }

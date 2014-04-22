@@ -28,7 +28,6 @@ public abstract class SizeOf {
         final int count = 10000;
         Object[] objects = new Object[count];
 
-
         // 实例化前堆已使用大小
         long heap1 = usedMemory();
         System.out.println("实例化前:" + heap1);
@@ -39,6 +38,52 @@ public abstract class SizeOf {
 
             // 实例化对象
             object = newInstance();
+
+            if (i >= 0) {
+                objects[i] = object;
+            } else {
+                // 释放第一个对象
+                object = null;
+                // 垃圾收集
+                runGC();
+                // 实例化之前堆已使用大小
+                heap1 = usedMemory();
+            }
+        }
+
+        runGC();
+        // 实例化之后堆已使用大小
+        long heap2 = usedMemory();
+        System.out.println("实例化后:" + heap2);
+        final int size = Math.round(((float) (heap2 - heap1)) / count);
+
+        // 释放内存
+        for (int i = 0; i < count; ++i) {
+            objects[i] = null;
+        }
+        objects = null;
+        return size;
+    }
+
+    public int chessSize() throws Exception {
+
+        // 垃圾回收
+        runGC();
+
+        // 提供尽可能多（10万）的实例以使计算结果更精确
+        final int count = 10000;
+        ChessDO[] objects = new ChessDO[count];
+
+        // 实例化前堆已使用大小
+        long heap1 = usedMemory();
+        System.out.println("实例化前:" + heap1);
+
+        // 多实例化一个对象
+        for (int i = -1; i < count; ++i) {
+            ChessDO object = null;
+
+            // 实例化对象
+            object = new ChessDO();
 
             if (i >= 0) {
                 objects[i] = object;
